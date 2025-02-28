@@ -40,14 +40,14 @@ This Python script monitors RSS feeds and posts new entries to a Discord webhook
 
     ```ini
     [Feeds]
-    Feed1 = [https://example.com/rss](https://example.com/rss)
-    Feed2 = [https://anotherexample.com/feed](https://anotherexample.com/feed)
-    Feed3 = [https://someotherfeed.com/rss](https://someotherfeed.com/rss)
+    Feed1 = https://example.com/rss
+    Feed2 = https://anotherexample.com/feed
+    Feed3 = https://someotherfeed.com/rss
 
     [General]
     sleep_interval = 120  ; Check every 2 minutes.
     processed_entries_file = my_processed_entries.json ; custom processed entries file name.
-    webhook_url = [https://discord.com/api/webhooks/your/shared/webhook](https://discord.com/api/webhooks/your/shared/webhook)
+    webhook_url = https://discord.com/api/webhooks/your/shared/webhook
     ```
 
     * Replace the placeholder URLs with your actual RSS feed and Discord webhook URLs.
