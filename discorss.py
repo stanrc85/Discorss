@@ -24,7 +24,7 @@ def load_rss_urls(config):
     try:
         return [url.strip() for url in config["RSS"]["urls"].splitlines() if url.strip()]
     except KeyError:
-        print("Error: RSS URLs not found in config file.")
+        print("Error: RSS URLs not found in config file.", flush=True)
         return []
 
 def load_webhook_url(config):
@@ -32,7 +32,7 @@ def load_webhook_url(config):
     try:
         return config["Discord"]["webhook_url"]
     except KeyError:
-        print("Error: Webhook URL not found in config file.")
+        print("Error: Webhook URL not found in config file.", flush=True)
         return None
 
 def load_check_interval(config):
@@ -40,7 +40,7 @@ def load_check_interval(config):
     try:
         return config["General"]["check_interval"]
     except KeyError:
-        print("Error: Check interval not found in config file.")
+        print("Error: Check interval not found in config file.", flush=True)
         return None
 
 def load_max_post_age_days(config):
@@ -48,7 +48,7 @@ def load_max_post_age_days(config):
     try:
         return config["General"]["max_post_age_days"]
     except KeyError:
-        print("Error: Max post age days not found in config file.")
+        print("Error: Max post age days not found in config file.", flush=True)
         return None
 
 def load_cache(filename):
@@ -69,7 +69,7 @@ def check_rss_feed(url, cache, age):
     try:
         feed = feedparser.parse(url)
         if not feed.entries:
-            print(f"No entries found in {url}")
+            print(f"No entries found in {url}", flush=True)
             return
 
         new_posts = []
@@ -91,7 +91,7 @@ def check_rss_feed(url, cache, age):
         return new_posts
 
     except Exception as e:
-        print(f"Error processing {url}: {e}")
+        print(f"Error processing {url}: {e}", flush=True)
         return []
 
 def send_discord_message(webhook_url, entry, feed_title):
@@ -117,12 +117,12 @@ def send_discord_message(webhook_url, entry, feed_title):
         }
         response = requests.post(webhook_url, json=payload)
         response.raise_for_status()
-        print(f"Sent message for: {title}")
+        print(f"Sent message for: {title}", flush=True)
 
     except requests.exceptions.RequestException as e:
-        print(f"Error sending message to Discord: {e}")
+        print(f"Error sending message to Discord: {e}", flush=True)
     except KeyError as e:
-        print(f"Error parsing entry: {e}")
+        print(f"Error parsing entry: {e}", flush=True)
 
 def main():
     """Main function to check RSS feeds and send messages."""
@@ -134,7 +134,6 @@ def main():
     age = load_max_post_age_days(config)
     max_age = int(age)
     cache = load_cache(CACHE_FILE)
-
     if not webhook_url:
         return
 
@@ -147,6 +146,8 @@ def main():
             if new_posts:
                 for post in new_posts:
                     send_discord_message(webhook_url, post, feed_title)
+            else:
+                print(f"No new posts on {feed_title}.", flush=True)
         save_cache(cache, CACHE_FILE)
         time.sleep(CHECK_INTERVAL)
 
