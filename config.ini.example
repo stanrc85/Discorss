@@ -5,3 +5,9 @@ urls =
 
 [Discord]
 webhook_url = YOUR_DISCORD_WEBHOOK_URL
+
+[General]
+# Check for updates every 300 seconds
+CHECK_INTERVAL = 300  
+# Only alert on posts younger than 1 day.
+MAX_POST_AGE_DAYS = 1 
