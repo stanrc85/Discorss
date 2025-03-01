@@ -1,9 +1,7 @@
-[Feeds]
-Feed1 = https://example.com/rss
-Feed2 = https://anotherexample.com/feed
-Feed3 = https://someotherfeed.com/rss
+[RSS]
+urls =
+    https://example.com/rss1
+    https://example.com/rss2
 
-[General]
-sleep_interval = 3000
-processed_entries_file = my_processed_entries.json
-webhook_url = https://discord.com/api/webhooks/xxx/yyy
+[Discord]
+webhook_url = YOUR_DISCORD_WEBHOOK_URL
