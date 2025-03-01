@@ -48,19 +48,17 @@ This Python script monitors Git Release RSS feeds and sends notifications to a D
 
     [Discord]
     webhook_url = YOUR_DISCORD_WEBHOOK_URL
+
+    [General]
+    # Check for updates every 300 seconds
+    CHECK_INTERVAL = 300  
+    # Only alert on posts younger than 1 day.
+    MAX_POST_AGE_DAYS = 1 
     ```
 
     * Replace `YOUR_DISCORD_WEBHOOK_URL` with your actual Discord webhook URL.
     * Add your RSS feed URLs under the `[RSS]` section, one per line.
-
-2.  **Configure `CHECK_INTERVAL` and `MAX_POST_AGE_DAYS`:**
-
-    You can modify these variables in the script to adjust the checking interval and the maximum post age for notifications.
-
-    ```python
-    CHECK_INTERVAL = 300  # Check every 5 minutes (300 seconds)
-    MAX_POST_AGE_DAYS = 1 # Only alert on posts younger than 1 day.
-    ```
+    * Configure `CHECK_INTERVAL` and `MAX_POST_AGE_DAYS`
 
 ## Usage
 
