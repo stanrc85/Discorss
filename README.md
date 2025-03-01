@@ -1,92 +1,85 @@
-# RSS to Discord Webhook
+# RSS to Discord Webhook Notifier
 
-This Python script monitors RSS feeds and posts new entries to a Discord webhook. It uses a configuration file to manage multiple feeds and a single shared webhook.
+This Python script monitors Git Release RSS feeds and sends notifications to a Discord webhook when new updates are published. It uses a configuration file for easy management of RSS URLs and the Discord webhook URL.
 
 ## Features
 
-* **Multiple RSS Feed Support:** Monitors multiple RSS feeds defined in a configuration file.
-* **Discord Webhook Integration:** Posts new entries to a specified Discord webhook.
-* **Persistent Entry Tracking:** Prevents duplicate posts by tracking processed entries in a JSON file.
-* **Markdown Conversion:** Converts HTML descriptions from RSS feeds to Markdown for cleaner Discord messages.
-* **Configurable Interval:** Sets the frequency of RSS feed checks through a configuration setting.
-* **Error Handling:** Robust error handling for RSS feed parsing, network issues, and Discord webhook errors.
-* **Configuration File:** Uses a configuration file for easy management of RSS feeds and settings.
+* **RSS Feed Monitoring:** Checks multiple RSS feeds at a specified interval.
+* **Discord Webhook Integration:** Sends notifications to a Discord channel via a webhook.
+* **Post Caching:** Prevents duplicate notifications by caching processed post IDs.
+* **Configurable RSS URLs and Webhook:** Uses a `config.ini` file for easy configuration.
+* **Post Age Filtering:** Only sends notifications for posts published within a specified time frame.
+* **Robust Date Handling:** Handles various date/time formats and timezones.
 
 ## Prerequisites
 
 * Python 3.6 or higher
-* `feedparser` library (`pip install feedparser`)
-* `requests` library (`pip install requests`)
-* `html2text` library (`pip install html2text`)
+* `feedparser` library
+* `requests` library
+* `configparser` library
+* `python-dateutil` library
 
 ## Installation
 
 1.  **Clone the repository:**
+
     ```bash
     git clone https://gitea.stanley.cloud/Ryan/discorss.git
     cd discorss
     ```
 
-2.  **Install the required libraries:**
+2.  **Install the required Python libraries:**
+
     ```bash
     pip install -r requirements.txt
     ```
 
 ## Configuration
 
-1.  **Create a `config.ini` file:**
-    * Create a `config.ini` file in the same directory as the Python script.
-    * Add your RSS feed URLs and Discord webhook URL to the `config.ini` file.
+1.  **Create `config.ini`:**
+
+    Create a `config.ini` file in the same directory as the script. Example:
 
     ```ini
-    [Feeds]
-    Feed1 = https://example.com/rss
-    Feed2 = https://anotherexample.com/feed
-    Feed3 = https://someotherfeed.com/rss
+    [RSS]
+    urls =
+        https://example.com/rss1
+        https://example.com/rss2
 
-    [General]
-    sleep_interval = 120  ; Check every 2 minutes.
-    processed_entries_file = my_processed_entries.json ; custom processed entries file name.
-    webhook_url = https://discord.com/api/webhooks/your/shared/webhook
+    [Discord]
+    webhook_url = YOUR_DISCORD_WEBHOOK_URL
     ```
 
-    * Replace the placeholder URLs with your actual RSS feed and Discord webhook URLs.
-    * Adjust the `sleep_interval` to your desired check frequency (in seconds).
-    * `processed_entries_file` allows you to customize the file name of the JSON file used to track processed entries.
+    * Replace `YOUR_DISCORD_WEBHOOK_URL` with your actual Discord webhook URL.
+    * Add your RSS feed URLs under the `[RSS]` section, one per line.
 
-2.  **Get your Discord Webhook URL:**
-    * In your Discord server, go to Server Settings > Integrations > Webhooks.
-    * Create a new webhook and copy the webhook URL.
+2.  **Configure `CHECK_INTERVAL` and `MAX_POST_AGE_DAYS`:**
+
+    You can modify these variables in the script to adjust the checking interval and the maximum post age for notifications.
+
+    ```python
+    CHECK_INTERVAL = 300  # Check every 5 minutes (300 seconds)
+    MAX_POST_AGE_DAYS = 1 # Only alert on posts younger than 1 day.
+    ```
 
 ## Usage
 
 1.  **Run the script:**
+
     ```bash
     python discorss.py
     ```
 
-2.  The script will periodically check the RSS feeds and post new entries to your Discord channel.
+2.  The script will run continuously, checking the RSS feeds at the specified interval and sending notifications to your Discord channel.
 
-## Troubleshooting
+## Running as a Service
 
-* **400 Bad Request:**
-    * Verify that your Discord webhook URL is correct.
-    * Check the `config.ini` file for any typos.
-    * Check the response code and response content that are printed to the console for more information.
-    * Simplify the embed payload to isolate the problem.
-* **RSS Parsing Errors:**
-    * Ensure that the RSS feed URLs are valid.
-    * Check the RSS feed in a browser to verify its content.
-* **Permission Errors:**
-    * Ensure the script has write permissions to create and modify the `processed_entries.json` file.
-* **Config file errors:**
-    * Ensure the config file is in the same directory as the script.
-    * Ensure all needed sections and variables are present.
+To run the script as a background service:
 
-## Contributing
+* **Linux/macOS:** Use `nohup` or `screen` or `systemd` or `pm2`.
+* **Windows:** Use Task Scheduler.
 
-Feel free to contribute to this project by submitting pull requests or opening issues.
+Example using `nohup` (Linux/macOS):
 
-## License
-
-This project is licensed under the MIT License.
+```bash
+nohup python discorss.py &
