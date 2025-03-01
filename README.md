@@ -1,4 +1,4 @@
-# RSS to Discord Webhook Notifier
+# Discorss - RSS to Discord Webhook Notifier
 
 This Python script monitors Git Release RSS feeds and sends notifications to a Discord webhook when new updates are published. It uses a configuration file for easy management of RSS URLs and the Discord webhook URL.
 
