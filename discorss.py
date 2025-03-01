@@ -12,8 +12,6 @@ import datetime
 # Configuration
 CONFIG_FILE = "config.ini"
 CACHE_FILE = "rss_cache.json"
-CHECK_INTERVAL = 300  # Check for updates every 300 seconds
-MAX_POST_AGE_DAYS = 1 # Only alert on posts younger than 1 day.
 
 def load_config(filename):
     """Loads configuration from a file."""
@@ -37,6 +35,22 @@ def load_webhook_url(config):
         print("Error: Webhook URL not found in config file.")
         return None
 
+def load_check_interval(config):
+    """Loads check_interval from the configuration."""
+    try:
+        return config["General"]["check_interval"]
+    except KeyError:
+        print("Error: Check interval not found in config file.")
+        return None
+
+def load_max_post_age_days(config):
+    """Loads webhook URL from the configuration."""
+    try:
+        return config["General"]["max_post_age_days"]
+    except KeyError:
+        print("Error: Max post age days not found in config file.")
+        return None
+
 def load_cache(filename):
     """Loads cached post IDs from a JSON file."""
     try:
@@ -50,7 +64,7 @@ def save_cache(cache, filename):
     with open(filename, "w") as f:
         json.dump(cache, f, indent=4)
 
-def check_rss_feed(url, cache):
+def check_rss_feed(url, cache, age):
     """Checks an RSS feed for new posts."""
     try:
         feed = feedparser.parse(url)
@@ -60,7 +74,7 @@ def check_rss_feed(url, cache):
 
         new_posts = []
         now = datetime.datetime.now(tz.UTC) #make now offset aware and utc.
-        max_age = datetime.timedelta(days=MAX_POST_AGE_DAYS)
+        max_age = datetime.timedelta(days=age)
 
         for entry in feed.entries:
             post_id = entry.get("id") or entry.get("link")  # Use ID if available, otherwise link
@@ -115,6 +129,10 @@ def main():
     config = load_config(CONFIG_FILE)
     rss_urls = load_rss_urls(config)
     webhook_url = load_webhook_url(config)
+    interval = load_check_interval(config)
+    CHECK_INTERVAL = int(interval)
+    age = load_max_post_age_days(config)
+    max_age = int(age)
     cache = load_cache(CACHE_FILE)
 
     if not webhook_url:
@@ -125,7 +143,7 @@ def main():
             # Get the feed title
             feed = feedparser.parse(url)
             feed_title = feed.feed.title  # Access the feed title
-            new_posts = check_rss_feed(url, cache)
+            new_posts = check_rss_feed(url, cache, max_age)
             if new_posts:
                 for post in new_posts:
                     send_discord_message(webhook_url, post, feed_title)
