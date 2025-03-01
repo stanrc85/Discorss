@@ -12,7 +12,7 @@ import datetime
 # Configuration
 CONFIG_FILE = "config.ini"
 CACHE_FILE = "rss_cache.json"
-CHECK_INTERVAL = 60  # Check for updates every 5 minutes (300 seconds)
+CHECK_INTERVAL = 300  # Check for updates every 300 seconds
 MAX_POST_AGE_DAYS = 1 # Only alert on posts younger than 1 day.
 
 def load_config(filename):
