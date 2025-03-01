@@ -50,7 +50,7 @@ This Python script monitors Git Release RSS feeds and sends notifications to a D
     webhook_url = YOUR_DISCORD_WEBHOOK_URL
 
     [General]
-    # Check for updates every 300 seconds
+    # Check for updates every 300 seconds, set to 0 to run once and then quit (when using in a scheduled task)
     CHECK_INTERVAL = 300  
     # Only alert on posts younger than 1 day.
     MAX_POST_AGE_DAYS = 1 

@@ -149,7 +149,10 @@ def main():
             else:
                 print(f"No new posts on {feed_title}.", flush=True)
         save_cache(cache, CACHE_FILE)
-        time.sleep(CHECK_INTERVAL)
+        if CHECK_INTERVAL == 0:
+            quit()
+        else:
+            time.sleep(CHECK_INTERVAL)
 
 if __name__ == "__main__":
     main()
