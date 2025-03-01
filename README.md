@@ -81,3 +81,25 @@ Example using `nohup` (Linux/macOS):
 
 ```bash
 nohup python discorss.py &
+```
+
+## Running in a Docker Container
+
+1.  **Build the Docker image**
+
+Open a terminal in the directory containing the Dockerfile and run:
+
+```bash
+docker build -t rss-discord-notifier .
+```
+
+2.  **Run the Docker container**
+
+You can now run the Docker container using the following command:
+
+```bash
+docker run -d --name discorss \
+    -v $(pwd)/config.ini:/app/config.ini \
+    -v $(pwd)/rss_cache.json:/app/rss_cache.json \
+    discorss
+```
