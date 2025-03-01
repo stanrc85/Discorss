@@ -150,6 +150,7 @@ def main():
                 print(f"No new posts on {feed_title}.", flush=True)
         save_cache(cache, CACHE_FILE)
         if CHECK_INTERVAL == 0:
+            print(f"Run complete, exiting.", flush=True)
             quit()
         else:
             time.sleep(CHECK_INTERVAL)
