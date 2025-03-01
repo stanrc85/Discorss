@@ -90,7 +90,7 @@ nohup python discorss.py &
 Open a terminal in the directory containing the Dockerfile and run:
 
 ```bash
-docker build -t rss-discord-notifier .
+docker build -t discorss .
 ```
 
 2.  **Run the Docker container**
