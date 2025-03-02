@@ -107,7 +107,7 @@ def send_discord_message(webhook_url, entry, feed_title):
         timestamp = entry.get("updated")
 
         embed = {
-            "title": f"[{feed_title}] {title}",  # Use feed_title in the embed title
+            "title": f"{feed_title} {title}",  # Use feed_title in the embed title
             "url": link,
             "description": description_markdown,
             "timestamp": timestamp
