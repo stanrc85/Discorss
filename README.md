@@ -9,7 +9,6 @@ This Python script monitors Git Release RSS feeds and sends notifications to a D
 * **Post Caching:** Prevents duplicate notifications by caching processed post IDs.
 * **Configurable RSS URLs and Webhook:** Uses a `config.ini` file for easy configuration.
 * **Post Age Filtering:** Only sends notifications for posts published within a specified time frame.
-* **Robust Date Handling:** Handles various date/time formats and timezones.
 
 ## Prerequisites
 
@@ -55,10 +54,9 @@ This Python script monitors Git Release RSS feeds and sends notifications to a D
     # Only alert on posts younger than 1 day.
     MAX_POST_AGE_DAYS = 1 
     ```
-
-    * Replace `YOUR_DISCORD_WEBHOOK_URL` with your actual Discord webhook URL.
     * Add your RSS feed URLs under the `[RSS]` section, one per line.
-    * Configure `CHECK_INTERVAL` and `MAX_POST_AGE_DAYS`
+    * Replace `YOUR_DISCORD_WEBHOOK_URL` with your actual Discord webhook URL.
+    * Configure `CHECK_INTERVAL` and `MAX_POST_AGE_DAYS` as desired.
 
 ## Usage
 
@@ -102,4 +100,18 @@ docker run -d --name discorss \
     -v $(pwd)/config.ini:/app/config.ini \
     -v $(pwd)/rss_cache.json:/app/rss_cache.json \
     discorss
+```
+
+## Running with Cron
+
+1.  **Edit crontab**
+
+```bash
+crontab -e
+```
+2.  **Add new entry**
+
+Run script every hour
+```bash
+0 * * * * python discorss.py
 ```
