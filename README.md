@@ -104,6 +104,8 @@ docker run -d --name discorss \
 
 ## Running with Cron
 
+Set `CHECK_INTERVAL = 0` in `config.ini`
+
 1.  **Edit crontab**
 
 ```bash
