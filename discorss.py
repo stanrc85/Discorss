@@ -103,7 +103,8 @@ def send_discord_message(webhook_url, entry, feed_title):
         title = entry.get("title", "Untitled")
         link = entry.get("link", "")
         description_html = getattr(entry, 'description', "No description available.")
-        description_markdown = h.handle(description_html) #convert to markdown
+        # convert to markdown
+        description_markdown = h.handle(description_html)[:2000] # discord limits to 2000 chars
         timestamp = entry.get("updated")
 
         embed = {
