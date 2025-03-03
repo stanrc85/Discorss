@@ -2,8 +2,6 @@
 
 This Python script monitors Git Release RSS feeds and sends notifications to a Discord webhook when new updates are published. It uses a configuration file for easy management of RSS URLs and the Discord webhook URL.
 
-Currently works with GitHub and Gitea release RSS feeds. Go to the repository `releases` page and then add `.atom` to the URL to view the RSS feed. Use that URL in the `config.ini`.
-
 ## Features
 
 * **RSS Feed Monitoring:** Checks multiple RSS feeds at a specified interval.
@@ -37,9 +35,19 @@ Currently works with GitHub and Gitea release RSS feeds. Go to the repository `r
 
 ## Configuration
 
-1.  **Create `config.ini`:**
+Confirmed works with GitHub and Gitea release RSS feeds. 
 
-    Create a `config.ini` file in the same directory as the script. Example:
+1.  **GitHub**
+
+    Go to the repository `releases` page and then add `.atom` to the URL to view the RSS feed. Add that URL in the `config.ini`.
+
+2.  **Gitea**
+
+    Go to the repository `releases` page and then click the RSS feed icon. Add that URL in the `config.ini`. 
+
+3.  **Create `config.ini`:**
+
+    Copy `config.ini.example` to `config.ini` and modify as needed:
 
     ```ini
     [RSS]
