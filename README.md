@@ -23,7 +23,7 @@ This Python script monitors Git Release RSS feeds and sends notifications to a D
 1.  **Clone the repository:**
 
     ```bash
-    git clone https://gitea.stanley.cloud/Ryan/discorss.git
+    git clone https://github.com/stanrc85/discorss.git
     cd discorss
     ```
 
